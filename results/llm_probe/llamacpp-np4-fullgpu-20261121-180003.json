@@ -1,0 +1,26 @@
+{
+  "label": "llamacpp-np4-fullgpu",
+  "vram": {},
+  "runs": {
+    "1": {
+      "requests": 2,
+      "decode_tok_s_per_request": 24.3,
+      "prefill_tok_s_per_request": 289.1,
+      "aggregate_decode_tok_s": 20.3,
+      "wall_ms_per_round": 16070,
+      "e2e_ms_mean": 16070,
+      "completion_tokens_mean": 326,
+      "prompt_tokens_mean": 792
+    },
+    "4": {
+      "requests": 8,
+      "decode_tok_s_per_request": 11.4,
+      "prefill_tok_s_per_request": 402.4,
+      "aggregate_decode_tok_s": 33.7,
+      "wall_ms_per_round": 34292,
+      "e2e_ms_mean": 28400,
+      "completion_tokens_mean": 289,
+      "prompt_tokens_mean": 1504
+    }
+  }
+}

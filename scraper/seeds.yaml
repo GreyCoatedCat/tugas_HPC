@@ -1,0 +1,77 @@
+# Daftar sumber resmi UGM untuk knowledge base.
+# Field:
+#   url       : URL halaman HTML atau file PDF
+#   title     : judul yang ditampilkan sebagai sumber jawaban (opsional; default dari dokumen)
+#   category  : peraturan | kalender | ukt | beasiswa | penerimaan | kurikulum | berita | lainnya
+#   crawl     : (opsional, khusus HTML) ikuti tautan di halaman ini
+#     depth       : kedalaman maksimum (1 = hanya tautan langsung)
+#     max_pages   : batas jumlah halaman dari seed ini
+#     allow       : daftar regex; tautan harus cocok salah satu
+#     follow_pdf  : ikut unduh tautan PDF (default true)
+#
+# Catatan: utamakan dokumen yang masih berlaku. Dokumen lama tetap boleh
+# dimasukkan, tetapi cantumkan tahunnya di judul agar pengguna bisa menilai.
+
+seeds:
+  # ------------------------------------------------------------ peraturan
+  - url: https://dkia.ugm.ac.id/wp-content/uploads/sites/1892/2024/08/PR-23-2024-SAL-PENDIDIKAN.pdf
+    title: Peraturan Rektor UGM No. 23 Tahun 2024 tentang Pendidikan
+    category: peraturan
+  - url: https://hukor.ugm.ac.id/wp-content/uploads/sites/42/2026/02/Perubahan-atas-Peraturan-Rektor-Universitas-Gadjah-Mada-Nomo-20260202112920_signed-2.pdf
+    title: Perubahan atas Peraturan Rektor UGM No. 23 Tahun 2024 tentang Pendidikan
+    category: peraturan
+  - url: https://tsp.sv.ugm.ac.id/wp-content/uploads/sites/1178/2022/12/STANDAR-PENDIDIKAN-UGM-2022.pdf
+    title: Standar Pendidikan UGM 2022
+    category: peraturan
+
+  # ------------------------------------------------------------ kalender
+  - url: https://akademik.ugm.ac.id/wp-content/uploads/sites/35/2026/03/266-2026_KEPTOR_KALENDER_AKADEMIK.pdf
+    title: Keputusan Rektor UGM No. 266/2026 tentang Kalender Akademik 2026/2027
+    category: kalender
+
+  # ------------------------------------------------------------ UKT & registrasi
+  - url: https://deb.sv.ugm.ac.id/wp-content/uploads/sites/98/2026/06/Edaran-Hereg-Gasal-2026-2027.pdf
+    title: Pengumuman Heregistrasi Semester Gasal 2026/2027
+    category: ukt
+  - url: https://akademik.ugm.ac.id/wp-content/uploads/sites/35/2021/12/6835-2021_KERINGANAN_UKT_GENAP-2021-2022.pdf
+    title: Keputusan Rektor UGM No. 6835/2021 tentang Keringanan UKT Semester Genap 2021/2022
+    category: ukt
+  - url: https://ugm.ac.id/id/berita/ugm-sepakat-tidak-menaikkan-ukt/
+    title: "Berita UGM: UGM Sepakat Tidak Menaikkan UKT"
+    category: berita
+
+  # ------------------------------------------------------------ penerimaan
+  - url: https://hukor.ugm.ac.id/wp-content/uploads/sites/42/2025/11/PR-4-Tahun-2025-Penerimaan-Mahasiswa-Baru-2025-SALINAN-WEB.pdf
+    title: Peraturan Rektor UGM No. 4 Tahun 2025 tentang Penerimaan Mahasiswa Baru
+    category: penerimaan
+  - url: https://admissions.ugm.ac.id/v26/wp-content/uploads/sites/3/2026/05/Pengumuman-Registrasi-Camaba-SNBT-Tahun-2026_signed.pdf
+    title: Pengumuman Registrasi Calon Mahasiswa Baru Jalur SNBT 2026
+    category: penerimaan
+  - url: https://ugm.ac.id/id/berita/jelang-pengumuman-snbt-calon-mahasiswa-ugm-perlu-siapkan-dokumen-registrasi-ini/
+    title: "Berita UGM: Dokumen Registrasi Calon Mahasiswa SNBT"
+    category: berita
+
+  # ------------------------------------------------------------ beasiswa
+  - url: https://ditmawa.ugm.ac.id/wp-content/uploads/sites/1212/2018/04/Panduan-Mendaftar-Beasiswa-Online-untuk-Mahasiswa-v.5.pdf
+    title: Panduan Mendaftar Beasiswa Online untuk Mahasiswa (Ditmawa UGM, 2018)
+    category: beasiswa
+  - url: https://ditmawa.ugm.ac.id/2023/04/beasiswa-ugm-angkatan-2022-semester-genap-ta-2022-2023-dan-semester-gasal-ta-2023-2024
+    title: Beasiswa UGM Angkatan 2022 (Ditmawa UGM, 2023)
+    category: beasiswa
+
+  # ------------------------------------------------------------ kurikulum
+  - url: https://chemistry.ugm.ac.id/wp-content/uploads/sites/1671/2025/01/Buku-Kurikulum-2021-S1-FMIPA-UGM-FAKULTAS_Final.pdf
+    title: Buku Kurikulum 2021 Program Sarjana FMIPA UGM
+    category: kurikulum
+  - url: https://ugm.ac.id/id/berita/siapkan-lulusan-yang-adaptif-ugm-terapkan-kurikulum-baru/
+    title: "Berita UGM: UGM Terapkan Kurikulum Baru"
+    category: berita
+
+  # ------------------------------------------------------------ contoh crawl (nonaktif)
+  # - url: https://ditmawa.ugm.ac.id/category/info-beasiswa/
+  #   category: beasiswa
+  #   crawl:
+  #     depth: 1
+  #     max_pages: 15
+  #     allow: ['^https://ditmawa\.ugm\.ac\.id/20\d\d/']
+  #     follow_pdf: true

@@ -1,0 +1,91 @@
+{
+  "mode": "baseline",
+  "paths": [
+    "data/scrape/raw"
+  ],
+  "runs": [
+    {
+      "n_files": 14,
+      "n_chunks": 1920,
+      "timings_ms": {
+        "ingest_wall": 12705.832,
+        "ingest_parse_clean_cpu": 12478.287,
+        "ingest_chunk_cpu": 147.13,
+        "ingest_store_cpu": 13.676,
+        "index_load_chunk_ids": 1.328,
+        "index_embed": 16503.133,
+        "index_bm25": 232.531,
+        "index_save": 3.967,
+        "total": 29447.99573099999
+      }
+    },
+    {
+      "n_files": 14,
+      "n_chunks": 1920,
+      "timings_ms": {
+        "ingest_wall": 14033.734,
+        "ingest_parse_clean_cpu": 13851.363,
+        "ingest_chunk_cpu": 148.366,
+        "ingest_store_cpu": 14.206,
+        "index_load_chunk_ids": 2.336,
+        "index_embed": 16438.449,
+        "index_bm25": 226.058,
+        "index_save": 5.686,
+        "total": 30708.179898999788
+      }
+    },
+    {
+      "n_files": 14,
+      "n_chunks": 1920,
+      "timings_ms": {
+        "ingest_wall": 14909.33,
+        "ingest_parse_clean_cpu": 14567.896,
+        "ingest_chunk_cpu": 301.627,
+        "ingest_store_cpu": 14.566,
+        "index_load_chunk_ids": 2.274,
+        "index_embed": 16473.399,
+        "index_bm25": 228.406,
+        "index_save": 5.852,
+        "total": 31621.292430000267
+      }
+    }
+  ],
+  "summary": {
+    "ingest_wall": {
+      "mean_ms": 13882.97,
+      "std_ms": 1109.46
+    },
+    "ingest_parse_clean_cpu": {
+      "mean_ms": 13632.52,
+      "std_ms": 1061.86
+    },
+    "ingest_chunk_cpu": {
+      "mean_ms": 199.04,
+      "std_ms": 88.84
+    },
+    "ingest_store_cpu": {
+      "mean_ms": 14.15,
+      "std_ms": 0.45
+    },
+    "index_load_chunk_ids": {
+      "mean_ms": 1.98,
+      "std_ms": 0.56
+    },
+    "index_embed": {
+      "mean_ms": 16471.66,
+      "std_ms": 32.38
+    },
+    "index_bm25": {
+      "mean_ms": 229.0,
+      "std_ms": 3.28
+    },
+    "index_save": {
+      "mean_ms": 5.17,
+      "std_ms": 1.04
+    },
+    "total": {
+      "mean_ms": 30592.49,
+      "std_ms": 1091.26
+    }
+  }
+}

@@ -1,0 +1,51 @@
+# ---------------------------------------------------------------- lingkungan & alat
+.venv/
+venv/
+.env
+.claude/
+.trackerignore
+.vscode/
+.idea/
+*.swp
+*~
+.DS_Store
+
+# ---------------------------------------------------------------- Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.ipynb_checkpoints/
+.gradio/
+flagged/
+
+# ---------------------------------------------------------------- konfigurasi lokal
+config.local.yaml
+
+# ---------------------------------------------------------------- build C++/CUDA (bash cpp/build.sh)
+cpp/build/
+*.so
+*.o
+
+# ---------------------------------------------------------------- data (besar / bisa dibangkitkan ulang)
+# KB SQLite + indeks, hasil scraping, data dummy (±3 GB)
+data/
+
+# ---------------------------------------------------------------- hasil pengukuran
+# Hanya ringkasan kecil yang disimpan di git (dirujuk README & laporan);
+# data mentah, log request, log server, dan arsip run yang dibatalkan tidak.
+results/*
+!results/comparison.md
+!results/ablation/
+!results/index_build/
+!results/llm_probe/
+!results/recall/
+!results/loadtest/
+results/loadtest/*/raw/
+results/loadtest/live/
+
+# ---------------------------------------------------------------- log
+*.log
+nohup.out

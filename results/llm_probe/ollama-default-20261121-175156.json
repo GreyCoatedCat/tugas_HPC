@@ -1,0 +1,30 @@
+{
+  "label": "ollama-default",
+  "vram": {
+    "size_mb": 5864,
+    "size_vram_mb": 3976,
+    "gpu_fraction": 0.678
+  },
+  "runs": {
+    "1": {
+      "requests": 2,
+      "decode_tok_s_per_request": 17.2,
+      "prefill_tok_s_per_request": 6832.2,
+      "aggregate_decode_tok_s": 15.8,
+      "wall_ms_per_round": 19732,
+      "e2e_ms_mean": 19732,
+      "completion_tokens_mean": 311,
+      "prompt_tokens_mean": 1766
+    },
+    "4": {
+      "requests": 8,
+      "decode_tok_s_per_request": 16.5,
+      "prefill_tok_s_per_request": 4457.1,
+      "aggregate_decode_tok_s": 14.8,
+      "wall_ms_per_round": 87070,
+      "e2e_ms_mean": 50653,
+      "completion_tokens_mean": 322,
+      "prompt_tokens_mean": 2100
+    }
+  }
+}

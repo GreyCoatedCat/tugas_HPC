@@ -1,0 +1,52 @@
+{
+  "collection": "dummy_s",
+  "mode": "baseline",
+  "n_questions": 200,
+  "n_chunks": 10002,
+  "results": {
+    "vector": {
+      "recall": {
+        "1": 0.9,
+        "5": 0.99,
+        "10": 1.0,
+        "20": 1.0
+      },
+      "mrr": 0.9403
+    },
+    "bm25": {
+      "recall": {
+        "1": 0.615,
+        "5": 1.0,
+        "10": 1.0,
+        "20": 1.0
+      },
+      "mrr": 0.7996
+    },
+    "hybrid_rrf": {
+      "recall": {
+        "1": 0.905,
+        "5": 1.0,
+        "10": 1.0,
+        "20": 1.0
+      },
+      "mrr": 0.9508
+    },
+    "reranked": {
+      "recall": {
+        "1": 0.98,
+        "5": 1.0,
+        "10": 1.0,
+        "20": 1.0
+      },
+      "mrr": 0.99
+    }
+  },
+  "stage_mean_ms": {
+    "embed_query": 3.84,
+    "search_vector": 0.85,
+    "search_bm25": 0.29,
+    "fusion": 0.07,
+    "fetch_chunks": 0.16,
+    "rerank": 94.32
+  }
+}

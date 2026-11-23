@@ -1,0 +1,26 @@
+{
+  "label": "llamacpp-np4-nocache-20261123",
+  "vram": {},
+  "runs": {
+    "1": {
+      "requests": 1,
+      "decode_tok_s_per_request": 19.0,
+      "prefill_tok_s_per_request": 53.9,
+      "aggregate_decode_tok_s": 18.9,
+      "wall_ms_per_round": 22236,
+      "e2e_ms_mean": 22235,
+      "completion_tokens_mean": 420,
+      "prompt_tokens_mean": 4
+    },
+    "4": {
+      "requests": 4,
+      "decode_tok_s_per_request": 11.7,
+      "prefill_tok_s_per_request": 335.8,
+      "aggregate_decode_tok_s": 37.2,
+      "wall_ms_per_round": 48617,
+      "e2e_ms_mean": 45036,
+      "completion_tokens_mean": 452,
+      "prompt_tokens_mean": 1909
+    }
+  }
+}

@@ -1,0 +1,91 @@
+{
+  "mode": "optimized",
+  "paths": [
+    "data/dummy/files_pdf_1000"
+  ],
+  "runs": [
+    {
+      "n_files": 1000,
+      "n_chunks": 6547,
+      "timings_ms": {
+        "ingest_wall": 2939.528,
+        "ingest_parse_clean_cpu": 21298.577,
+        "ingest_chunk_cpu": 220.258,
+        "ingest_store_cpu": 320.899,
+        "index_load_chunk_ids": 4.216,
+        "index_embed": 8703.448,
+        "index_bm25": 224.552,
+        "index_save": 5.013,
+        "total": 11890.918123999654
+      }
+    },
+    {
+      "n_files": 1000,
+      "n_chunks": 6547,
+      "timings_ms": {
+        "ingest_wall": 2880.501,
+        "ingest_parse_clean_cpu": 20693.787,
+        "ingest_chunk_cpu": 222.64,
+        "ingest_store_cpu": 333.21,
+        "index_load_chunk_ids": 4.261,
+        "index_embed": 8649.962,
+        "index_bm25": 222.906,
+        "index_save": 4.428,
+        "total": 11773.034961999656
+      }
+    },
+    {
+      "n_files": 1000,
+      "n_chunks": 6547,
+      "timings_ms": {
+        "ingest_wall": 2778.973,
+        "ingest_parse_clean_cpu": 20554.064,
+        "ingest_chunk_cpu": 219.98,
+        "ingest_store_cpu": 303.847,
+        "index_load_chunk_ids": 4.158,
+        "index_embed": 8525.947,
+        "index_bm25": 223.603,
+        "index_save": 4.519,
+        "total": 11549.86393099989
+      }
+    }
+  ],
+  "summary": {
+    "ingest_wall": {
+      "mean_ms": 2866.33,
+      "std_ms": 81.21
+    },
+    "ingest_parse_clean_cpu": {
+      "mean_ms": 20848.81,
+      "std_ms": 395.73
+    },
+    "ingest_chunk_cpu": {
+      "mean_ms": 220.96,
+      "std_ms": 1.46
+    },
+    "ingest_store_cpu": {
+      "mean_ms": 319.32,
+      "std_ms": 14.75
+    },
+    "index_load_chunk_ids": {
+      "mean_ms": 4.21,
+      "std_ms": 0.05
+    },
+    "index_embed": {
+      "mean_ms": 8626.45,
+      "std_ms": 91.06
+    },
+    "index_bm25": {
+      "mean_ms": 223.69,
+      "std_ms": 0.83
+    },
+    "index_save": {
+      "mean_ms": 4.65,
+      "std_ms": 0.31
+    },
+    "total": {
+      "mean_ms": 11737.94,
+      "std_ms": 173.21
+    }
+  }
+}

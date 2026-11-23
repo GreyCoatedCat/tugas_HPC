@@ -1,0 +1,110 @@
+# Konfigurasi Asisten Informasi Akademik UGM (RAG baseline).
+# Override lokal (tidak perlu di-commit) bisa ditaruh di config.local.yaml
+# dengan struktur yang sama; nilainya akan di-merge di atas file ini.
+
+server:
+  host: 127.0.0.1
+  port: 8000
+  warmup: true            # muat model + panggil LLM sekali saat server start
+  request_log: true       # tulis timing per request ke results/requests/*.jsonl
+
+ui:
+  host: 127.0.0.1
+  port: 7860
+  api_url: http://127.0.0.1:8000
+
+paths:
+  data_dir: data
+  kb_dir: data/kb               # satu folder per koleksi knowledge base
+  scrape_dir: data/scrape       # hasil scraping (raw + clean)
+  results_dir: results
+
+kb:
+  default_collection: ugm       # koleksi resmi yang dipakai chatbot
+
+chunking:
+  chunk_words: 180              # ~300 token untuk teks Bahasa Indonesia
+  overlap_words: 40
+  min_words: 20
+
+models:
+  embedder:
+    name: intfloat/multilingual-e5-small
+    query_prefix: "query: "
+    passage_prefix: "passage: "
+    pooling: mean
+    max_length: 512
+    device: auto                # auto | cuda | cpu
+  reranker:
+    enabled: true
+    name: cross-encoder/mmarco-mMiniLMv2-L12-H384-v1
+    max_length: 512
+    batch_size: 16
+    device: auto
+  llm:
+    # Server LLM teroptimasi: llama-server (llama.cpp bawaan Ollama) dengan continuous batching,
+    # semua layer di GPU, tanpa vision projector. Jalankan dulu: python -m tools.llm_server
+    # Bobot model identik dengan qwen3.5:9b di Ollama (berkas GGUF yang sama).
+    backend: openai             # ollama | openai (llama.cpp server / vLLM) | transformers
+    model: qwen3.5:9b
+    base_url: http://127.0.0.1:8081
+    temperature: 0.1
+    max_tokens: 768
+    timeout_s: 600
+    # --- konfigurasi baseline 20 Nov 2026 (Ollama bawaan, 1 permintaan per waktu) ---
+    # backend: ollama
+    # base_url: http://127.0.0.1:11434
+    # num_ctx: 4096
+    # think: false              # matikan mode "thinking" Qwen
+    # keep_alive: 30m
+
+retrieval:
+  top_k_vector: 50
+  top_k_bm25: 50
+  rrf_k: 60
+  rerank_candidates: 20
+  top_k_context: 5
+  # Ambang relevansi (probabilitas sigmoid dari reranker). Chunk di bawah
+  # ambang dibuang; kalau tidak ada yang lolos, LLM TIDAK dipanggil dan
+  # chatbot menjawab "tidak ditemukan" -> mencegah jawaban di luar KB.
+  min_rerank_score: 0.10
+  min_vector_score: 0.80        # dipakai hanya jika reranker dimatikan
+
+grounding:
+  refuse_message: >-
+    Maaf, saya tidak menemukan informasi tersebut di dokumen resmi yang ada di
+    knowledge base. Silakan hubungi bagian akademik fakultas/universitas atau
+    tambahkan dokumen resmi yang relevan ke knowledge base.
+
+# Mode eksekusi pipeline. "baseline" = implementasi acuan sesuai proposal
+# (Bab 3.4). Mode lain bisa didefinisikan; mode hanya bisa dipilih jika semua
+# backend-nya tersedia (lihat rag/backends.py — modul C++ OpenMP/CUDA akan
+# mendaftarkan backend tambahan).
+modes:
+  baseline:
+    description: "Sekuensial: parsing 1 worker, embedding FP32 per chunk, brute-force CPU 1 thread, tanpa batching, LLM 1 permintaan per waktu"
+    embed_batch_size: 1
+    embed_dtype: float32
+    vector_backend: numpy
+    vector_threads: 1
+    bm25_backend: scipy
+    ingest_workers: 1
+    pipeline_max_concurrency: 1
+    llm_max_concurrency: 1
+  optimized:
+    description: "C++ CUDA top-k (FP16) + BM25 OpenMP, dynamic batching retrieval + overlap CPU-GPU, FP16 autocast, parsing paralel, embedding batch FP16, LLM 4 permintaan sekaligus (continuous batching llama.cpp)"
+    embed_batch_size: 64
+    embed_dtype: float16
+    vector_backend: cuda_topk     # rag_hpc (C++/CUDA): similarity + radix-select top-k
+    vector_dtype: float16
+    vector_threads: 0
+    bm25_backend: openmp          # rag_hpc (C++/OpenMP): segmen dokumen per thread
+    bm25_threads: 8
+    model_fp16: true
+    rerank_batch_size: 64
+    retrieval_batch_max: 16       # dynamic batching permintaan konkuren
+    retrieval_batch_window_ms: 0  # tanpa jendela tunggu: batch terbentuk dari antrean saat eksekutor bebas
+    overlap_cpu_gpu: true
+    ingest_workers: 8
+    pipeline_max_concurrency: 1   # tidak dipakai saat batching aktif (satu eksekutor batch)
+    llm_max_concurrency: 4        # = jumlah slot llama-server (python -m tools.llm_server --parallel 4)

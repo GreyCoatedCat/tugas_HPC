@@ -1,0 +1,30 @@
+{
+  "label": "ollama-par4-fa-q8",
+  "vram": {
+    "size_mb": 5787,
+    "size_vram_mb": 4045,
+    "gpu_fraction": 0.699
+  },
+  "runs": {
+    "1": {
+      "requests": 2,
+      "decode_tok_s_per_request": 18.6,
+      "prefill_tok_s_per_request": 7301.2,
+      "aggregate_decode_tok_s": 17.2,
+      "wall_ms_per_round": 21492,
+      "e2e_ms_mean": 21491,
+      "completion_tokens_mean": 370,
+      "prompt_tokens_mean": 1766
+    },
+    "4": {
+      "requests": 8,
+      "decode_tok_s_per_request": 18.4,
+      "prefill_tok_s_per_request": 4946.2,
+      "aggregate_decode_tok_s": 16.2,
+      "wall_ms_per_round": 78663,
+      "e2e_ms_mean": 52545,
+      "completion_tokens_mean": 319,
+      "prompt_tokens_mean": 2100
+    }
+  }
+}

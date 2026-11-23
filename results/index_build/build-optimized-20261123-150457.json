@@ -1,0 +1,91 @@
+{
+  "mode": "optimized",
+  "paths": [
+    "data/scrape/raw"
+  ],
+  "runs": [
+    {
+      "n_files": 14,
+      "n_chunks": 1920,
+      "timings_ms": {
+        "ingest_wall": 1696.728,
+        "ingest_parse_clean_cpu": 10840.311,
+        "ingest_chunk_cpu": 102.189,
+        "ingest_store_cpu": 10.246,
+        "index_load_chunk_ids": 1.286,
+        "index_embed": 7680.699,
+        "index_bm25": 136.682,
+        "index_save": 3.966,
+        "total": 9521.280984000441
+      }
+    },
+    {
+      "n_files": 14,
+      "n_chunks": 1920,
+      "timings_ms": {
+        "ingest_wall": 1743.845,
+        "ingest_parse_clean_cpu": 10379.656,
+        "ingest_chunk_cpu": 99.632,
+        "ingest_store_cpu": 10.577,
+        "index_load_chunk_ids": 1.323,
+        "index_embed": 7733.308,
+        "index_bm25": 130.293,
+        "index_save": 4.083,
+        "total": 9614.942035999775
+      }
+    },
+    {
+      "n_files": 14,
+      "n_chunks": 1920,
+      "timings_ms": {
+        "ingest_wall": 1763.036,
+        "ingest_parse_clean_cpu": 10852.243,
+        "ingest_chunk_cpu": 207.584,
+        "ingest_store_cpu": 11.161,
+        "index_load_chunk_ids": 1.355,
+        "index_embed": 7675.451,
+        "index_bm25": 127.031,
+        "index_save": 3.7,
+        "total": 9572.593515000335
+      }
+    }
+  ],
+  "summary": {
+    "ingest_wall": {
+      "mean_ms": 1734.54,
+      "std_ms": 34.12
+    },
+    "ingest_parse_clean_cpu": {
+      "mean_ms": 10690.74,
+      "std_ms": 269.47
+    },
+    "ingest_chunk_cpu": {
+      "mean_ms": 136.47,
+      "std_ms": 61.6
+    },
+    "ingest_store_cpu": {
+      "mean_ms": 10.66,
+      "std_ms": 0.46
+    },
+    "index_load_chunk_ids": {
+      "mean_ms": 1.32,
+      "std_ms": 0.03
+    },
+    "index_embed": {
+      "mean_ms": 7696.49,
+      "std_ms": 32.0
+    },
+    "index_bm25": {
+      "mean_ms": 131.34,
+      "std_ms": 4.91
+    },
+    "index_save": {
+      "mean_ms": 3.92,
+      "std_ms": 0.2
+    },
+    "total": {
+      "mean_ms": 9569.61,
+      "std_ms": 46.9
+    }
+  }
+}

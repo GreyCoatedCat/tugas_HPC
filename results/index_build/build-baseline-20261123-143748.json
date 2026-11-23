@@ -1,0 +1,91 @@
+{
+  "mode": "baseline",
+  "paths": [
+    "data/dummy/files_pdf_1000"
+  ],
+  "runs": [
+    {
+      "n_files": 1000,
+      "n_chunks": 6547,
+      "timings_ms": {
+        "ingest_wall": 28652.676,
+        "ingest_parse_clean_cpu": 26458.738,
+        "ingest_chunk_cpu": 305.163,
+        "ingest_store_cpu": 230.616,
+        "index_load_chunk_ids": 3.149,
+        "index_embed": 38341.292,
+        "index_bm25": 379.322,
+        "index_save": 6.677,
+        "total": 67396.00020300031
+      }
+    },
+    {
+      "n_files": 1000,
+      "n_chunks": 6547,
+      "timings_ms": {
+        "ingest_wall": 22458.373,
+        "ingest_parse_clean_cpu": 21726.888,
+        "ingest_chunk_cpu": 238.04,
+        "ingest_store_cpu": 292.452,
+        "index_load_chunk_ids": 5.982,
+        "index_embed": 38120.583,
+        "index_bm25": 394.507,
+        "index_save": 6.779,
+        "total": 60994.57000800021
+      }
+    },
+    {
+      "n_files": 1000,
+      "n_chunks": 6547,
+      "timings_ms": {
+        "ingest_wall": 25068.653,
+        "ingest_parse_clean_cpu": 24225.671,
+        "ingest_chunk_cpu": 266.371,
+        "ingest_store_cpu": 353.526,
+        "index_load_chunk_ids": 3.209,
+        "index_embed": 38207.589,
+        "index_bm25": 370.274,
+        "index_save": 6.523,
+        "total": 63669.24788799997
+      }
+    }
+  ],
+  "summary": {
+    "ingest_wall": {
+      "mean_ms": 25393.23,
+      "std_ms": 3109.88
+    },
+    "ingest_parse_clean_cpu": {
+      "mean_ms": 24137.1,
+      "std_ms": 2367.17
+    },
+    "ingest_chunk_cpu": {
+      "mean_ms": 269.86,
+      "std_ms": 33.7
+    },
+    "ingest_store_cpu": {
+      "mean_ms": 292.2,
+      "std_ms": 61.46
+    },
+    "index_load_chunk_ids": {
+      "mean_ms": 4.11,
+      "std_ms": 1.62
+    },
+    "index_embed": {
+      "mean_ms": 38223.15,
+      "std_ms": 111.17
+    },
+    "index_bm25": {
+      "mean_ms": 381.37,
+      "std_ms": 12.25
+    },
+    "index_save": {
+      "mean_ms": 6.66,
+      "std_ms": 0.13
+    },
+    "total": {
+      "mean_ms": 64019.94,
+      "std_ms": 3215.09
+    }
+  }
+}
