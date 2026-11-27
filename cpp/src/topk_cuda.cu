@@ -21,12 +21,16 @@
 #include <string>
 #include <vector>
 
+// Saat gagal, status error per-thread dibersihkan (cudaGetLastError) sebelum melempar: error non-sticky
+// seperti OOM pada cudaMalloc tidak boleh "terbaca ulang" oleh pengecekan peluncuran kernel berikutnya.
 #define CUDA_CHECK(x)                                                                         \
     do {                                                                                      \
         cudaError_t err__ = (x);                                                              \
-        if (err__ != cudaSuccess)                                                             \
+        if (err__ != cudaSuccess) {                                                           \
+            (void)cudaGetLastError();                                                         \
             throw std::runtime_error(std::string("CUDA error: ") + cudaGetErrorString(err__) + \
                                      " at " #x);                                              \
+        }                                                                                     \
     } while (0)
 
 namespace rag_hpc {
@@ -179,6 +183,18 @@ void free_ptr(T*& p) {
 CudaTopK::CudaTopK(const float* emb, int64_t n, int d, bool fp16, int device)
     : n_(n), d_(d), fp16_(fp16), device_(device) {
     if (d <= 0 || (d % 2) != 0) throw std::invalid_argument("dimensi vektor harus genap dan > 0");
+    // Destruktor tidak dipanggil bila konstruktor melempar: lepaskan sendiri yang sudah dialokasikan.
+    try {
+        init(emb, fp16);
+    } catch (...) {
+        release();
+        throw;
+    }
+}
+
+void CudaTopK::init(const float* emb, bool fp16) {
+    const int64_t n = n_;
+    const int d = d_;
     CUDA_CHECK(cudaSetDevice(device_));
     cudaDeviceProp prop{};
     CUDA_CHECK(cudaGetDeviceProperties(&prop, device_));
@@ -223,7 +239,9 @@ CudaTopK::CudaTopK(const float* emb, int64_t n, int d, bool fp16, int device)
     cudaFree(staging);
 }
 
-CudaTopK::~CudaTopK() {
+CudaTopK::~CudaTopK() { release(); }
+
+void CudaTopK::release() noexcept {
     cudaSetDevice(device_);
     if (stream_) cudaStreamSynchronize(static_cast<cudaStream_t>(stream_));
     free_ptr(d_matrix_);
@@ -239,10 +257,14 @@ CudaTopK::~CudaTopK() {
     for (auto& e : ev_)
         if (e) cudaEventDestroy(static_cast<cudaEvent_t>(e));
     if (stream_) cudaStreamDestroy(static_cast<cudaStream_t>(stream_));
+    stream_ = nullptr;
+    for (auto& e : ev_) e = nullptr;
+    cap_m_ = cap_k_ = 0;
 }
 
 void CudaTopK::ensure_capacity(int m, int k) {
     if (m > cap_m_) {
+        cap_m_ = cap_k_ = 0;  // bila alokasi di bawah gagal, panggilan berikutnya mengalokasikan ulang
         free_ptr(d_queries_);
         free_ptr(d_scores_);
         free_ptr(d_hist_);
@@ -257,12 +279,12 @@ void CudaTopK::ensure_capacity(int m, int k) {
         CUDA_CHECK(cudaMalloc(&d_mask_, (size_t)m * sizeof(uint32_t)));
         CUDA_CHECK(cudaMalloc(&d_krem_, (size_t)m * sizeof(int)));
         CUDA_CHECK(cudaMalloc(&d_cnt_, (size_t)m * 2 * sizeof(int)));
-        cap_m_ = m;
         free_ptr(d_out_idx_);
         free_ptr(d_out_s_);
-        cap_k_ = 0;
+        cap_m_ = m;
     }
     if (k > cap_k_) {
+        cap_k_ = 0;
         free_ptr(d_out_idx_);
         free_ptr(d_out_s_);
         CUDA_CHECK(cudaMalloc(&d_out_idx_, (size_t)cap_m_ * k * sizeof(int64_t)));

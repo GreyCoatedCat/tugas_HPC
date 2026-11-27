@@ -2,7 +2,7 @@ import argparse
 
 from rag.config import load_config
 
-from .app import CSS, build_ui
+from .app import CSS, HEAD, JS, THEME, build_ui
 
 cfg = load_config()
 ap = argparse.ArgumentParser(description="Jalankan demo UI Gradio")
@@ -11,4 +11,6 @@ ap.add_argument("--port", type=int, default=(cfg.get("ui") or {}).get("port", 78
 args = ap.parse_args()
 
 demo = build_ui()
-demo.queue(default_concurrency_limit=32).launch(server_name=args.host, server_port=args.port, css=CSS, footer_links=[])
+demo.queue(default_concurrency_limit=32).launch(
+    server_name=args.host, server_port=args.port, theme=THEME, css=CSS, head=HEAD, js=JS, footer_links=[]
+)

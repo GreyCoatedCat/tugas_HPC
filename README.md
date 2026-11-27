@@ -34,6 +34,9 @@ ablation, dan laporan sebelum–sesudah (bagian *Optimasi* di bawah).
 | `tools/` | CLI knowledge base (`kb.py`), generator data dummy (`gen_dummy.py`), Recall@k (`eval_recall.py`), server LLM teroptimasi (`llm_server.py`), probe LLM (`llm_probe.py`), ablation (`ablation.py`), laporan sebelum–sesudah (`compare.py`) |
 | `loadtest/` | skenario Locust, orkestrator sapuan konkurensi (`run.py`), benchmark satu mode (`run_full.sh`), evaluasi sebelum–sesudah (`run_compare.sh`) |
 | `cpp/` | modul C++ `rag_hpc`: kernel CUDA similarity + top-k, BM25 OpenMP (pybind11) — lihat [cpp/README.md](cpp/README.md) |
+| `tests/` | uji otomatis (pytest): kesetaraan CUDA vs NumPy, OpenMP vs SciPy, ingest paralel, antrean FIFO, retrieval optimized vs baseline |
+| `docs/` | [isian bagian merah proposal](docs/isian_proposal.md) dari hasil pengukuran |
+| `demo.sh` | menyalakan server LLM + API + UI dengan satu perintah |
 | `config.yaml` | semua parameter (model, retrieval, ambang relevansi, mode baseline/optimized) |
 | `data/` | KB, hasil scraping, data dummy (dibuat otomatis, tidak di-commit) |
 | `results/` | log request, hasil uji beban, build indeks, recall |
@@ -68,7 +71,14 @@ Face saat pertama dipakai (±1 GB).
 
 ## Menjalankan
 
-Gunakan terminal terpisah untuk setiap langkah (atau jalankan di background).
+Cara cepat, satu perintah. Skrip ini menyalakan server LLM, API, dan UI berurutan,
+menunggu masing-masing siap, dan Ctrl+C mematikan semuanya:
+
+```bash
+bash demo.sh
+```
+
+Atau manual, dengan satu terminal per langkah:
 
 1. Server LLM. Perintah ini menjalankan `llama-server` bawaan Ollama dengan berkas
    model yang sama, 4 slot paralel, dan semua layer di GPU. Alasannya ada di
@@ -224,15 +234,23 @@ header UI dan `GET /api/health → hpc`.
    radio, lalu ajukan pertanyaan. Panel *Latensi per tahap* menampilkan waktu
    setiap tahap. Di mode optimized ditampilkan juga ukuran batch, waktu kernel
    CUDA (similarity + top-k), BM25 OpenMP, dan penghematan overlap.
-3. **Tombol ⚖️ Bandingkan baseline vs teroptimasi.** Pertanyaan yang sama
-   dijalankan 5× di kedua mode (retrieval saja), lalu ditampilkan tabel
-   percepatan per tahap dan cek bahwa sumber konteksnya identik. Pilih koleksi
-   `dummy_m`/`dummy_l` untuk melihat efek CUDA/OpenMP pada korpus besar.
+3. **Tombol "Bandingkan mode".** Pertanyaan yang sama dijalankan 5× di kedua
+   mode (retrieval saja). Panel kanan menampilkan total percepatan, tabel
+   percepatan per tahap, dan cek bahwa sumber konteksnya identik. Koleksi
+   `dummy_m`/`dummy_l` memperlihatkan efek CUDA/OpenMP pada korpus besar, tetapi
+   indeks GPU-nya baru muat bila server LLM tidak sedang memakai VRAM (jalankan
+   `python -m server` dan `python -m ui` saja). Saat demo lengkap berjalan,
+   bandingkan di koleksi `ugm`.
 4. **Tab Monitor & Uji Beban.** Jalankan pengguna virtual (mis. 20 pengguna,
    dengan LLM) sambil tetap chat. Tabel monitor memisahkan metrik per mode
    (throughput, p50/p95, TTFT). Jalankan sekali di baseline lalu sekali di
    optimized: antrean LLM di baseline membengkak, sedangkan di optimized
    empat jawaban dikerjakan bersamaan.
+5. **Tab Hasil Speedup.** Ringkasan pengukuran sebelum–sesudah yang sudah
+   dijalankan: kartu angka utama, grafik `results/figures/`, tabel dari
+   `results/comparison.md`, ablation + hukum Amdahl, micro-benchmark kernel,
+   dan Recall@k baseline vs optimized. Halaman ini membaca berkas di
+   `results/`, jadi muat ulang UI setelah mengulang pengukuran.
 
 ### Evaluasi sebelum–sesudah
 
@@ -326,6 +344,25 @@ Kolom tengah adalah ablation. Runtime baru (semua layer di GPU) menyumbang
   - Setelah parsing paralel (±8×: 13,9 → 1,7 s dan 25,4 → 2,9 s), embedding menjadi 73–80% waktu build dan
     compute-bound di FP16.
 
+**Analisis tingkat kernel** (`tools.bench_kernels`, `tools.profile_gpu`; grafik di `results/figures/`):
+- **Kernel similarity CUDA memory-bound.**
+  - FP32 pada N = 10⁵ mencapai 264 GB/s, setara bandwidth salin memori GPU
+    (258 GB/s).
+  - Batching 16 kueri menurunkan waktu per kueri 7× (10⁶: 7,1 → 1,0 ms), karena
+    matriks dibaca sekali per batch.
+  - Penyimpanan FP16 menghemat separuh VRAM, tetapi hanya 1,3× lebih cepat dari FP32
+    (112 vs 169 GB/s pada 10⁶). Lane membaca `half2` 4 byte per instruksi, sehingga
+    peluang berikutnya adalah load 8–16 byte per lane.
+- **BM25 OpenMP**, strong scaling pada 65 juta posting:
+  - speedup 1,9× (2 thread), 3,3× (4 thread), 5,2× (16 thread);
+  - efisiensi turun dari 95% ke 32% karena beban memory-bound, CPU hibrida (6 P-core +
+    4 E-core), dan penggabungan top-k yang serial.
+- **Profil GPU satu batch** (16 kueri, 10⁶ chunk):
+  - ±75% waktu GPU adalah reranker (GEMM tensor core FP16 + memory-efficient attention);
+  - kernel similarity kita hanya ±3%;
+  - konversi bobot FP32 → FP16 oleh autocast memakan ±3%. Ini biaya dari tidak
+    menyimpan salinan bobot FP16 di VRAM yang sempit.
+
 **Kualitas tidak berubah:**
 - konteks top-5 identik untuk 20/20 pertanyaan;
 - Recall@k dan MRR identik untuk 500 pertanyaan;
@@ -362,6 +399,26 @@ Kolom tengah adalah ablation. Runtime baru (semua layer di GPU) menyumbang
 ```bash
 # Kualitas retrieval: Recall@k & MRR untuk vektor, BM25, hybrid, reranked
 .venv/bin/python -m tools.eval_recall --collection dummy_s --qa data/dummy/dummy_s/qa.jsonl
+```
+
+```bash
+# Uji otomatis kebenaran optimasi (±20 detik; -m "not slow" untuk melewati tes yang memuat model)
+.venv/bin/python -m pytest
+```
+
+```bash
+# Micro-benchmark kernel: bandwidth CUDA vs N & batch, strong scaling BM25 OpenMP 1..16 thread
+.venv/bin/python -m tools.bench_kernels
+```
+
+```bash
+# Profil GPU tingkat kernel (torch.profiler/CUPTI) + timeline Perfetto -> results/profiling/
+.venv/bin/python -m tools.profile_gpu --collection dummy_l --mode optimized --batch 16
+```
+
+```bash
+# Grafik untuk laporan dari semua hasil -> results/figures/fig1..fig8.png
+.venv/bin/python -m tools.plots
 ```
 
 ```bash

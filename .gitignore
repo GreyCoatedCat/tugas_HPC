@@ -45,6 +45,11 @@ results/*
 !results/loadtest/
 results/loadtest/*/raw/
 results/loadtest/live/
+!results/figures/
+!results/kernels/
+!results/profiling/
+# trace timeline profiling (±14 MB) — bangkitkan ulang dengan: python -m tools.profile_gpu
+results/profiling/*.json
 
 # ---------------------------------------------------------------- log
 *.log

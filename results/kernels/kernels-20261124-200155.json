@@ -1,0 +1,299 @@
+{
+  "created": "2026-11-24T20:01:34",
+  "cpu": {
+    "logical_cpus": 16,
+    "physical_cores": 10,
+    "model": "13th Gen Intel(R) Core(TM) i5-13450HX"
+  },
+  "gpu": {
+    "name": "NVIDIA GeForce RTX 5050 Laptop GPU",
+    "compute_capability": "12.0",
+    "sm_count": 20,
+    "total_mem_mb": 7705.75,
+    "free_mem_mb": 7077.5625,
+    "cuda_runtime": 12000,
+    "cuda_driver": 13000
+  },
+  "gpu_copy_bandwidth_gbs": 258.3046818038427,
+  "cuda_topk": [
+    {
+      "n": 10000,
+      "dtype": "float16",
+      "batch": 1,
+      "wall_ms": 0.103,
+      "per_query_ms": 0.1035,
+      "score_kernel_ms": 0.0441,
+      "select_ms": 0.0369,
+      "bandwidth_gbs": 174.0,
+      "numpy_1thread_ms": 0.603,
+      "speedup_vs_numpy": 5.8
+    },
+    {
+      "n": 10000,
+      "dtype": "float16",
+      "batch": 4,
+      "wall_ms": 0.131,
+      "per_query_ms": 0.0328,
+      "score_kernel_ms": 0.0522,
+      "select_ms": 0.0471,
+      "bandwidth_gbs": 147.1,
+      "numpy_1thread_ms": 0.603,
+      "speedup_vs_numpy": 18.4
+    },
+    {
+      "n": 10000,
+      "dtype": "float16",
+      "batch": 16,
+      "wall_ms": 0.217,
+      "per_query_ms": 0.0136,
+      "score_kernel_ms": 0.0922,
+      "select_ms": 0.0696,
+      "bandwidth_gbs": 83.3,
+      "numpy_1thread_ms": 0.603,
+      "speedup_vs_numpy": 44.5
+    },
+    {
+      "n": 10000,
+      "dtype": "float32",
+      "batch": 1,
+      "wall_ms": 0.103,
+      "per_query_ms": 0.1034,
+      "score_kernel_ms": 0.044,
+      "select_ms": 0.0369,
+      "bandwidth_gbs": 348.7,
+      "numpy_1thread_ms": 0.603,
+      "speedup_vs_numpy": 5.8
+    },
+    {
+      "n": 10000,
+      "dtype": "float32",
+      "batch": 4,
+      "wall_ms": 0.131,
+      "per_query_ms": 0.0328,
+      "score_kernel_ms": 0.0523,
+      "select_ms": 0.0512,
+      "bandwidth_gbs": 293.8,
+      "numpy_1thread_ms": 0.603,
+      "speedup_vs_numpy": 18.4
+    },
+    {
+      "n": 10000,
+      "dtype": "float32",
+      "batch": 16,
+      "wall_ms": 0.217,
+      "per_query_ms": 0.0136,
+      "score_kernel_ms": 0.0944,
+      "select_ms": 0.0707,
+      "bandwidth_gbs": 162.8,
+      "numpy_1thread_ms": 0.603,
+      "speedup_vs_numpy": 44.4
+    },
+    {
+      "n": 100000,
+      "dtype": "float16",
+      "batch": 1,
+      "wall_ms": 0.526,
+      "per_query_ms": 0.5257,
+      "score_kernel_ms": 0.4498,
+      "select_ms": 0.0512,
+      "bandwidth_gbs": 170.8,
+      "numpy_1thread_ms": 7.287,
+      "speedup_vs_numpy": 13.9
+    },
+    {
+      "n": 100000,
+      "dtype": "float16",
+      "batch": 4,
+      "wall_ms": 0.615,
+      "per_query_ms": 0.1538,
+      "score_kernel_ms": 0.5132,
+      "select_ms": 0.0737,
+      "bandwidth_gbs": 149.6,
+      "numpy_1thread_ms": 7.287,
+      "speedup_vs_numpy": 47.4
+    },
+    {
+      "n": 100000,
+      "dtype": "float16",
+      "batch": 16,
+      "wall_ms": 1.37,
+      "per_query_ms": 0.0857,
+      "score_kernel_ms": 1.047,
+      "select_ms": 0.1774,
+      "bandwidth_gbs": 73.4,
+      "numpy_1thread_ms": 7.287,
+      "speedup_vs_numpy": 85.1
+    },
+    {
+      "n": 100000,
+      "dtype": "float32",
+      "batch": 1,
+      "wall_ms": 0.661,
+      "per_query_ms": 0.6614,
+      "score_kernel_ms": 0.5823,
+      "select_ms": 0.0553,
+      "bandwidth_gbs": 263.8,
+      "numpy_1thread_ms": 7.287,
+      "speedup_vs_numpy": 11.0
+    },
+    {
+      "n": 100000,
+      "dtype": "float32",
+      "batch": 4,
+      "wall_ms": 0.788,
+      "per_query_ms": 0.1971,
+      "score_kernel_ms": 0.6695,
+      "select_ms": 0.0901,
+      "bandwidth_gbs": 229.4,
+      "numpy_1thread_ms": 7.287,
+      "speedup_vs_numpy": 37.0
+    },
+    {
+      "n": 100000,
+      "dtype": "float32",
+      "batch": 16,
+      "wall_ms": 1.472,
+      "per_query_ms": 0.092,
+      "score_kernel_ms": 1.1802,
+      "select_ms": 0.1986,
+      "bandwidth_gbs": 130.2,
+      "numpy_1thread_ms": 7.287,
+      "speedup_vs_numpy": 79.2
+    },
+    {
+      "n": 1000000,
+      "dtype": "float16",
+      "batch": 1,
+      "wall_ms": 7.064,
+      "per_query_ms": 7.0644,
+      "score_kernel_ms": 6.8781,
+      "select_ms": 0.146,
+      "bandwidth_gbs": 111.7,
+      "numpy_1thread_ms": 74.395,
+      "speedup_vs_numpy": 10.5
+    },
+    {
+      "n": 1000000,
+      "dtype": "float16",
+      "batch": 4,
+      "wall_ms": 8.487,
+      "per_query_ms": 2.1218,
+      "score_kernel_ms": 8.0723,
+      "select_ms": 0.313,
+      "bandwidth_gbs": 95.1,
+      "numpy_1thread_ms": 74.395,
+      "speedup_vs_numpy": 35.1
+    },
+    {
+      "n": 1000000,
+      "dtype": "float16",
+      "batch": 16,
+      "wall_ms": 15.898,
+      "per_query_ms": 0.9936,
+      "score_kernel_ms": 14.1948,
+      "select_ms": 1.5045,
+      "bandwidth_gbs": 54.1,
+      "numpy_1thread_ms": 74.395,
+      "speedup_vs_numpy": 74.9
+    },
+    {
+      "n": 1000000,
+      "dtype": "float32",
+      "batch": 1,
+      "wall_ms": 9.345,
+      "per_query_ms": 9.345,
+      "score_kernel_ms": 9.1088,
+      "select_ms": 0.1782,
+      "bandwidth_gbs": 168.6,
+      "numpy_1thread_ms": 74.395,
+      "speedup_vs_numpy": 8.0
+    },
+    {
+      "n": 1000000,
+      "dtype": "float32",
+      "batch": 4,
+      "wall_ms": 10.142,
+      "per_query_ms": 2.5356,
+      "score_kernel_ms": 9.7325,
+      "select_ms": 0.3656,
+      "bandwidth_gbs": 157.8,
+      "numpy_1thread_ms": 74.395,
+      "speedup_vs_numpy": 29.3
+    },
+    {
+      "n": 1000000,
+      "dtype": "float32",
+      "batch": 16,
+      "wall_ms": 18.254,
+      "per_query_ms": 1.1409,
+      "score_kernel_ms": 16.4707,
+      "select_ms": 1.8964,
+      "bandwidth_gbs": 93.3,
+      "numpy_1thread_ms": 74.395,
+      "speedup_vs_numpy": 65.2
+    }
+  ],
+  "bm25_omp": {
+    "n_docs": 1000006,
+    "nnz": 65035441,
+    "scipy_ms": 41.462,
+    "rows": [
+      {
+        "threads": 1,
+        "ms_per_query": 11.545,
+        "speedup_vs_1thread": 1.0,
+        "efficiency": 1.0,
+        "speedup_vs_scipy": 3.6
+      },
+      {
+        "threads": 2,
+        "ms_per_query": 6.06,
+        "speedup_vs_1thread": 1.91,
+        "efficiency": 0.95,
+        "speedup_vs_scipy": 6.8
+      },
+      {
+        "threads": 4,
+        "ms_per_query": 3.515,
+        "speedup_vs_1thread": 3.28,
+        "efficiency": 0.82,
+        "speedup_vs_scipy": 11.8
+      },
+      {
+        "threads": 6,
+        "ms_per_query": 2.848,
+        "speedup_vs_1thread": 4.05,
+        "efficiency": 0.68,
+        "speedup_vs_scipy": 14.6
+      },
+      {
+        "threads": 8,
+        "ms_per_query": 2.578,
+        "speedup_vs_1thread": 4.48,
+        "efficiency": 0.56,
+        "speedup_vs_scipy": 16.1
+      },
+      {
+        "threads": 10,
+        "ms_per_query": 2.432,
+        "speedup_vs_1thread": 4.75,
+        "efficiency": 0.47,
+        "speedup_vs_scipy": 17.0
+      },
+      {
+        "threads": 12,
+        "ms_per_query": 2.401,
+        "speedup_vs_1thread": 4.81,
+        "efficiency": 0.4,
+        "speedup_vs_scipy": 17.3
+      },
+      {
+        "threads": 16,
+        "ms_per_query": 2.223,
+        "speedup_vs_1thread": 5.19,
+        "efficiency": 0.32,
+        "speedup_vs_scipy": 18.7
+      }
+    ]
+  }
+}

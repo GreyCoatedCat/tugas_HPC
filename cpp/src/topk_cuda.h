@@ -34,6 +34,8 @@ public:
     int max_batch() const { return max_batch_; }
 
 private:
+    void init(const float* emb, bool fp16);
+    void release() noexcept;
     void ensure_capacity(int m, int k);
     void search_chunk(const float* queries, int m, int k, int64_t* out_idx, float* out_scores, CudaTimings* t);
 

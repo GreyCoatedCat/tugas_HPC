@@ -1,0 +1,191 @@
+{
+  "created": "2026-11-24T20:41:21",
+  "users": 32,
+  "duration_s": 20.0,
+  "collections": {
+    "ugm": [
+      {
+        "step": "baseline",
+        "single_ms": {
+          "embed_query": 4.433,
+          "search_vector": 0.295,
+          "search_bm25": 0.09,
+          "fusion": 0.073,
+          "fetch_chunks": 0.148,
+          "rerank": 146.704,
+          "total": 151.465
+        },
+        "throughput": {
+          "qps": 6.65,
+          "p50_ms": 4811.3,
+          "p95_ms": 4887.7,
+          "completed": 164
+        }
+      },
+      {
+        "step": "+cuda_topk",
+        "single_ms": {
+          "embed_query": 4.165,
+          "search_vector": 0.168,
+          "search_bm25": 0.127,
+          "fusion": 0.082,
+          "fetch_chunks": 0.147,
+          "rerank": 145.324,
+          "total": 149.879
+        },
+        "throughput": {
+          "qps": 6.67,
+          "p50_ms": 4797.0,
+          "p95_ms": 4883.9,
+          "completed": 165
+        }
+      },
+      {
+        "step": "+bm25_openmp",
+        "single_ms": {
+          "embed_query": 4.103,
+          "search_vector": 0.17,
+          "search_bm25": 0.108,
+          "fusion": 0.088,
+          "fetch_chunks": 0.143,
+          "rerank": 142.88,
+          "total": 147.524
+        },
+        "throughput": {
+          "qps": 6.66,
+          "p50_ms": 4801.1,
+          "p95_ms": 4912.0,
+          "completed": 164
+        }
+      },
+      {
+        "step": "+fp16",
+        "single_ms": {
+          "embed_query": 5.316,
+          "search_vector": 0.169,
+          "search_bm25": 0.105,
+          "fusion": 0.089,
+          "fetch_chunks": 0.146,
+          "rerank": 52.936,
+          "total": 58.956
+        },
+        "throughput": {
+          "qps": 16.05,
+          "p50_ms": 1993.2,
+          "p95_ms": 2033.4,
+          "completed": 353
+        }
+      },
+      {
+        "step": "+batching",
+        "single_ms": {
+          "embed_query": 5.322,
+          "search_vector": 0.177,
+          "search_bm25": 0.106,
+          "fusion": 0.088,
+          "fetch_chunks": 0.144,
+          "rerank": 56.282,
+          "total": 62.538
+        },
+        "throughput": {
+          "qps": 15.21,
+          "p50_ms": 2116.1,
+          "p95_ms": 2161.8,
+          "completed": 321
+        }
+      }
+    ],
+    "dummy_l": [
+      {
+        "step": "baseline",
+        "single_ms": {
+          "embed_query": 5.094,
+          "search_vector": 78.713,
+          "search_bm25": 40.879,
+          "fusion": 0.089,
+          "fetch_chunks": 0.215,
+          "rerank": 81.748,
+          "total": 209.137
+        },
+        "throughput": {
+          "qps": 4.85,
+          "p50_ms": 6479.7,
+          "p95_ms": 6821.4,
+          "completed": 127
+        }
+      },
+      {
+        "step": "+cuda_topk",
+        "single_ms": {
+          "embed_query": 4.58,
+          "search_vector": 6.597,
+          "search_bm25": 41.569,
+          "fusion": 0.09,
+          "fetch_chunks": 0.179,
+          "rerank": 83.422,
+          "total": 136.031
+        },
+        "throughput": {
+          "qps": 7.63,
+          "p50_ms": 4164.4,
+          "p95_ms": 4311.4,
+          "completed": 185
+        }
+      },
+      {
+        "step": "+bm25_openmp",
+        "single_ms": {
+          "embed_query": 4.649,
+          "search_vector": 7.011,
+          "search_bm25": 3.763,
+          "fusion": 0.136,
+          "fetch_chunks": 0.216,
+          "rerank": 94.167,
+          "total": 110.432
+        },
+        "throughput": {
+          "qps": 9.52,
+          "p50_ms": 3323.4,
+          "p95_ms": 3493.7,
+          "completed": 223
+        }
+      },
+      {
+        "step": "+fp16",
+        "single_ms": {
+          "embed_query": 5.941,
+          "search_vector": 6.757,
+          "search_bm25": 3.816,
+          "fusion": 0.099,
+          "fetch_chunks": 0.19,
+          "rerank": 33.183,
+          "total": 50.332
+        },
+        "throughput": {
+          "qps": 19.53,
+          "p50_ms": 1619.2,
+          "p95_ms": 1701.3,
+          "completed": 423
+        }
+      },
+      {
+        "step": "+batching",
+        "single_ms": {
+          "embed_query": 5.713,
+          "search_vector": 8.035,
+          "search_bm25": 3.835,
+          "fusion": 0.118,
+          "fetch_chunks": 0.208,
+          "rerank": 34.056,
+          "total": 52.352
+        },
+        "throughput": {
+          "qps": 30.54,
+          "p50_ms": 1045.0,
+          "p95_ms": 1088.6,
+          "completed": 641
+        }
+      }
+    ]
+  }
+}

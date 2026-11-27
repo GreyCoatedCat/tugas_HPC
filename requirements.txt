@@ -30,5 +30,9 @@ nvidia-ml-py==13.615.71
 
 PyYAML==6.0.3
 
+# Analisis & uji: grafik laporan (tools.plots) dan uji otomatis (pytest)
+matplotlib==3.11.2
+pytest==9.2.0
+
 # Build modul C++ rag_hpc (bash cpp/build.sh) — juga butuh nvcc, CMake, Ninja, g++-12 dari sistem
 pybind11==3.1.0
